@@ -1,15 +1,3 @@
-## **Task 5: Docker Image Creation and Push to Docker Hub**
-
-### **Objective**
-Automate the creation of a Docker image for the web application and push it to Docker Hub using Jenkins.
-
----
-
-### **Step 1: Update Jenkinsfile in GitHub Repository**
-Modify the `Jenkinsfile` in your repository to include Docker image creation and pushing to Docker Hub.
-
-#### **Updated Jenkinsfile:**
-```groovy
 pipeline {
     agent any
 
