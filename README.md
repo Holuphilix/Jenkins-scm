@@ -189,10 +189,11 @@ https://github.com/Holuphilix/jenkins-scm.git
 6. In **Script Path**, enter:
 
 ```sh
-Jenkinsfile
+WebApp-Pipeline/Jenkinsfile
 ```
 
-**Screenshot:** Pipeline Configuration
+**Screenshot:** Script Path: WebApp-Pipeline/Jenkinsfile
+
 ![Pipeline Job Configuration](./Images/21.Pipeline_config_advance.png)
 
 7. Click **Save**, then click **Build Now** to test.
@@ -423,7 +424,7 @@ venv/
 **Screenshot:** .gitignore Execution
 ![.gitignore Execution](./Images/25.gitignore_script.png)
 
-## **Task 5: Docker Image Creation and Push to Docker Hub**
+## **Task 6: Docker Image Creation and Push to Docker Hub**
 
 ### **Objective**
 Automate the creation of a Docker image for the web application and push it to Docker Hub using Jenkins.
@@ -510,10 +511,11 @@ https://github.com/Holuphilix/jenkins-scm.git
 7. In Script Path, enter:
 
 ```sh
-Jenkinsfile
+Docker-Pipeline/Jenkinsfile
 ```
 
-**Screenshot:**  Script Path `Jenkinsfile`
+**Screenshot:**  Script Path `Docker-Pipeline/Jenkinsfile
+`
 ![Script Path `Jenkinsfile`](./Images/32.Jenkins_scripts.png)
 
 8. Click Save.
