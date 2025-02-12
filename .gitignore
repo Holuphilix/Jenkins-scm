@@ -1,0 +1,14 @@
+# Ignore Docker files
+*.log
+*.tmp
+.dockerignore
+
+# Ignore Jenkins workspace files
+workspace/
+target/
+node_modules/
+
+# Ignore IDE files
+.vscode/
+.idea/
+

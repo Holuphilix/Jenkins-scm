@@ -165,203 +165,178 @@ https://github.com/Holuphilix/jenkins-scm.git
 
 ![Console Output](./Images/18.Console%20Output.png)
 
+## Task 4: Jenkins Pipeline for Web Application
+
+### Objective
+Develop a Jenkins Pipeline that automates the deployment of a simple web application.
+
+### Steps
+1. Create a simple `index.html` file.
+2. Configure a `Jenkinsfile` to automate building and deploying the web application.
+
+## Task 5: Docker Image Creation and Registry Push
+
+### Objective
+Automate the creation of a Docker image for the web application and push it to a container registry.
+
+### Steps
+1. Write a `Dockerfile` for containerizing the web application.
+2. Modify the `Jenkinsfile` to include Docker build and push steps.
+
 
 ### **Task 5: Pipeline Job for Web Application Deployment**
 **Objective:** Automate the web application deployment using Jenkins Pipeline and Docker.
 
 #### **Steps to Create the Job:**
-1. Click **"New Item"**, enter `WebApp-Pipeline`, and select **"Pipeline"**.
+1. Click **"New Item"**, enter `WebApp-Deployment-Pipeline`, and select **"Pipeline"**.
 2. Click **OK**
 
-**Screenshot:**  New Item `WebApp-Pipeline`
+**Screenshot:**  New Item `WebApp-Deployment-Pipeline`
 ![New Item](./Images/19.Pipeline_Project.png)
 
 3. Under **"Pipeline"**, select **Pipeline script from SCM**
 4. Choose **Git** and enter the repository URL:
-   ```sh
-   https://github.com/Holuphilix/jenkins-scm.git
-   ```
+   
+```sh
+https://github.com/Holuphilix/Jenkins-scm.git
+```
 
-**Screenshot:**  Pipeline SCM `WebApp-Pipeline`
+**Screenshot:**  Pipeline SCM `WebApp-Deployment-Pipeline`
 ![Pipeline SCM](./Images/20.WebApp-Pipeline_SCM.png)
 
 5. Set **Branch** to `main`.
 6. In **Script Path**, enter:
 
 ```sh
-WebApp-Pipeline/Jenkinsfile
+Jenkinsfile
 ```
 
-**Screenshot:** Script Path: WebApp-Pipeline/Jenkinsfile
+**Screenshot:** Script Path: Jenkinsfile
 
 ![Pipeline Job Configuration](./Images/21.Pipeline_config_advance.png)
 
-7. Click **Save**, then click **Build Now** to test.
+#### **index.html Script for WebApp-Deployment-Pipeline:**
 
-- **Screenshot:** Build Now Status
-
-![Build Now Status](./Images/29.Jenkins_pipeline_build_now.png)
-
-- **Console Output:** 
 ```groovy
-  Started by user Philip Oludolamu
-Obtained Jenkinsfile from git https://github.com/Holuphilix/Jenkins-scm.git
-[Pipeline] Start of Pipeline
-[Pipeline] node
-Running on Jenkins in /var/lib/jenkins/workspace/WebApp-Pipeline
-[Pipeline] {
-[Pipeline] stage
-[Pipeline] { (Declarative: Checkout SCM)
-[Pipeline] checkout
-Selected Git installation does not exist. Using Default
-The recommended git tool is: NONE
-No credentials specified
- > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/WebApp-Pipeline/.git # timeout=10
-Fetching changes from the remote Git repository
- > git config remote.origin.url https://github.com/Holuphilix/Jenkins-scm.git # timeout=10
-Fetching upstream changes from https://github.com/Holuphilix/Jenkins-scm.git
- > git --version # timeout=10
- > git --version # 'git version 2.43.0'
- > git fetch --tags --force --progress -- https://github.com/Holuphilix/Jenkins-scm.git +refs/heads/*:refs/remotes/origin/* # timeout=10
- > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
-Checking out Revision b6aa1e2b608c0bca173b4756cefda400e623cac9 (refs/remotes/origin/main)
- > git config core.sparsecheckout # timeout=10
- > git checkout -f b6aa1e2b608c0bca173b4756cefda400e623cac9 # timeout=10
-Commit message: "Initial commit with pipeline files"
- > git rev-list --no-walk b6aa1e2b608c0bca173b4756cefda400e623cac9 # timeout=10
-[Pipeline] }
-[Pipeline] // stage
-[Pipeline] withEnv
-[Pipeline] {
-[Pipeline] stage
-[Pipeline] { (Checkout Code)
-[Pipeline] checkout
-The recommended git tool is: NONE
-No credentials specified
- > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/WebApp-Pipeline/.git # timeout=10
-Fetching changes from the remote Git repository
- > git config remote.origin.url https://github.com/Holuphilix/jenkins-scm.git # timeout=10
-Fetching upstream changes from https://github.com/Holuphilix/jenkins-scm.git
- > git --version # timeout=10
- > git --version # 'git version 2.43.0'
- > git fetch --tags --force --progress -- https://github.com/Holuphilix/jenkins-scm.git +refs/heads/*:refs/remotes/origin/* # timeout=10
- > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
-Checking out Revision b6aa1e2b608c0bca173b4756cefda400e623cac9 (refs/remotes/origin/main)
- > git config core.sparsecheckout # timeout=10
- > git checkout -f b6aa1e2b608c0bca173b4756cefda400e623cac9 # timeout=10
-Commit message: "Initial commit with pipeline files"
- > git rev-list --no-walk b6aa1e2b608c0bca173b4756cefda400e623cac9 # timeout=10
-[Pipeline] }
-[Pipeline] // stage
-[Pipeline] stage
-[Pipeline] { (Build Docker Image)
-[Pipeline] script
-[Pipeline] {
-[Pipeline] sh
-+ docker build -t my-webapp .
-DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
-            Install the buildx component to build images with BuildKit:
-            https://docs.docker.com/go/buildx/
-
-Sending build context to Docker daemon  2.572MB
-
-Step 1/3 : FROM nginx:latest
-latest: Pulling from library/nginx
-c29f5b76f736: Pulling fs layer
-e19db8451adb: Pulling fs layer
-24ff42a0d907: Pulling fs layer
-c558df217949: Pulling fs layer
-976e8f6b25dd: Pulling fs layer
-6c78b0ba1a32: Pulling fs layer
-84cade77a831: Pulling fs layer
-c558df217949: Waiting
-976e8f6b25dd: Waiting
-6c78b0ba1a32: Waiting
-84cade77a831: Waiting
-24ff42a0d907: Verifying Checksum
-24ff42a0d907: Download complete
-c558df217949: Verifying Checksum
-c558df217949: Download complete
-976e8f6b25dd: Verifying Checksum
-976e8f6b25dd: Download complete
-6c78b0ba1a32: Verifying Checksum
-6c78b0ba1a32: Download complete
-c29f5b76f736: Verifying Checksum
-c29f5b76f736: Download complete
-e19db8451adb: Verifying Checksum
-e19db8451adb: Download complete
-84cade77a831: Verifying Checksum
-84cade77a831: Download complete
-c29f5b76f736: Pull complete
-e19db8451adb: Pull complete
-24ff42a0d907: Pull complete
-c558df217949: Pull complete
-976e8f6b25dd: Pull complete
-6c78b0ba1a32: Pull complete
-84cade77a831: Pull complete
-Digest: sha256:91734281c0ebfc6f1aea979cffeed5079cfe786228a71cc6f1f46a228cde6e34
-Status: Downloaded newer image for nginx:latest
- ---> 97662d24417b
-Step 2/3 : COPY index.html /usr/share/nginx/html/index.html
- ---> c21f664880db
-Step 3/3 : EXPOSE 80
- ---> Running in 0d532026fab9
- ---> Removed intermediate container 0d532026fab9
- ---> 59c822f21ac1
-Successfully built 59c822f21ac1
-Successfully tagged my-webapp:latest
-[Pipeline] }
-[Pipeline] // script
-[Pipeline] }
-[Pipeline] // stage
-[Pipeline] stage
-[Pipeline] { (Run Docker Container)
-[Pipeline] script
-[Pipeline] {
-[Pipeline] sh
-+ docker run -itd -p 8081:80 my-webapp
-84598abbef87571a2aff721ea8c0211e7c042b624823a1b6de70fbb0214c6654
-[Pipeline] }
-[Pipeline] // script
-[Pipeline] }
-[Pipeline] // stage
-[Pipeline] }
-[Pipeline] // withEnv
-[Pipeline] }
-[Pipeline] // node
-[Pipeline] End of Pipeline
-Finished: SUCCESS
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jenkins CI/CD Pipeline</title>
+</head>
+<body>
+    <h1>Welcome to My Web Application</h1>
+    <p>Deployed using Jenkins CI/CD Pipeline</p>
+</body>
+</html>
 ```
 
-#### **Jenkinsfile Script for WebApp Pipeline:**
+**Screenshot:** Index.html Execution
+![index.html Execution](./Images/24.Index.html_script.png)
+
+#### **Configure a `Jenkinsfile` to automate building and deploying the web application.**
 
 ```groovy
 pipeline {
     agent any
 
+    environment {
+        DOCKER_IMAGE = 'holuphilix/webapp:latest'
+    }
+
     stages {
-        stage('Checkout Code') {
+        stage('Clone Repository') {
             steps {
-                checkout([$class: 'GitSCM',
-                          branches: [[name: '*/main']],
-                          extensions: [],
-                          userRemoteConfigs: [[url: 'https://github.com/Holuphilix/jenkins-scm.git']]
-                ])
+                echo 'Cloning GitHub Repository...'
+                git branch: 'main', url: 'https://github.com/Holuphilix/Jenkins-scm.git'
             }
         }
+
+        stage('Build Web Application') {
+            steps {
+                echo 'Building Web Application...'
+                sh 'docker build -t ${DOCKER_IMAGE} .'
+            }
+        }
+
+        stage('Run Application') {
+            steps {
+                echo 'Running Web Application Container...'
+                sh 'docker run -d -p 8080:80 ${DOCKER_IMAGE}'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Please check the logs.'
+        }
+    }
+}
+```
+
+### **Task 6: Docker Image Creation and Push to Docker Hub**
+
+#### **Objective**
+Automate the creation of a Docker image for the web application and push it to Docker Hub using Jenkins.
+
+#### **Step 1: Update Jenkinsfile in GitHub Repository**
+Modify the `Jenkinsfile` in your repository to include Docker image creation and pushing to Docker Hub.
+
+#### **Updated Jenkinsfile Script for WebApp-Deployment-Pipeline:**
+
+```groovy
+pipeline {
+    agent any
+
+    environment {
+        DOCKERHUB_CREDENTIALS = 'docker-hub-credentials' // Set this in Jenkins Credentials
+        DOCKER_IMAGE = 'holuphilix/jenkins-pipeline-app:v1'
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git 'https://github.com/Holuphilix/Jenkins-scm.git'
+            }
+        }
+
+        stage('Build Application') {
+            steps {
+                sh 'echo "<h1>Welcome to Jenkins Pipeline!</h1>" > index.html'
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
-                script {
-                    sh 'docker build -t my-webapp .'  
+                sh 'docker build -t $DOCKER_IMAGE .'
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                sh 'docker run -d -p 8080:80 $DOCKER_IMAGE'
+            }
+        }
+
+        stage('Push Image to DockerHub') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                    sh 'docker push $DOCKER_IMAGE'
                 }
             }
         }
-        stage('Run Docker Container') {
-            steps {
-                script {
-                    sh 'docker run -itd -p 8081:80 my-webapp'
-                }
-            }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Check the logs.'
         }
     }
 }
@@ -370,7 +345,7 @@ pipeline {
 **Screenshot:** Jenkins Pipeline Execution
 ![Jenkins Pipeline Execution](./Images/22.Jenkinsfile_script.png)
 
-#### **Dockerfile Script for WebApp Pipeline:**
+#### **Dockerfile Script for WebApp-Deployment-Pipeline:**
 
 ```groovy
 # Use an official Nginx image as the base image
@@ -386,27 +361,7 @@ EXPOSE 80
 **Screenshot:** Dockerfile Execution
 ![Dockerfile Execution](./Images/23.Dockerfile_Script.png)
 
-#### **index.html Script for WebApp Pipeline:**
-
-```groovy
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Web App</title>
-</head>
-<body>
-    <h1>Welcome to My CI/CD Web App!</h1>
-    <p>Deployed using Jenkins and Docker.</p>
-</body>
-</html>
-```
-
-**Screenshot:** Index.html Execution
-![index.html Execution](./Images/24.Index.html_script.png)
-
-#### **.gitignore Script for WebApp Pipeline:**
+#### **.gitignore Script for WebApp-Deployment-Pipeline:**
 
 ```groovy
 # Ignore temporary files
@@ -424,105 +379,21 @@ venv/
 **Screenshot:** .gitignore Execution
 ![.gitignore Execution](./Images/25.gitignore_script.png)
 
-## **Task 6: Docker Image Creation and Push to Docker Hub**
-
-### **Objective**
-Automate the creation of a Docker image for the web application and push it to Docker Hub using Jenkins.
-
-### **Step 1: Update Jenkinsfile in GitHub Repository**
-Modify the `Jenkinsfile` in your repository to include Docker image creation and pushing to Docker Hub.
-
-#### **Updated Jenkinsfile:**
-
-```groovy
-pipeline {
-    agent any
-
-    environment {
-        DOCKER_IMAGE = "your-dockerhub-username/my-webapp:latest"
-    }
-
-    stages {
-        stage('Checkout Code') {
-            steps {
-                checkout([$class: 'GitSCM', 
-                          branches: [[name: '*/main']], 
-                          extensions: [], 
-                          userRemoteConfigs: [[url: 'https://github.com/Holuphilix/jenkins-scm.git']]
-                ])
-            }
-        }
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    sh 'docker build -t $DOCKER_IMAGE .'
-                }
-            }
-        }
-        stage('Push Docker Image to Docker Hub') {
-            steps {
-                script {
-                    sh 'docker push $DOCKER_IMAGE'
-                }
-            }
-        }
-        stage('Run Docker Container') {
-            steps {
-                script {
-                    sh 'docker run -itd -p 8081:80 $DOCKER_IMAGE'
-                }
-            }
-        }
-    }
-}
-```
-
-### **Step 2: Commit and Push Changes**
+#### **Step 2: Commit and Push Changes**
 
 #### After updating the Jenkinsfile, save the changes and push them to your GitHub repository.
 
 **Commands:**
 
 ```bash
-git add Jenkinsfile
+git add .
 git commit -m "Updated Jenkinsfile for Docker image creation and push"
 git push origin main
 ```
-### **Step 3: Create a New Jenkins Job**
 
-1. Open Jenkins Dashboard.
-2. Click "New Item".
-3. Enter **Docker-Pipeline**, select "Pipeline", and click OK.
+#### Step 4: Trigger the Build
 
-**Screenshot:**  New Item `Docker-Pipeline`
-![New Item Docker-Pipeline](./Images/30.Docker-Pipeline.png)
-
-4. Under Pipeline, select Pipeline script from SCM.
-5. Choose Git and enter:
-
-**Screenshot:** Docker-Pipeline SCM  `Docker-Pipeline`
-![ Docker-Pipeline SCM](./Images/31.Docker-Pipeline_SCM.png)
-
-```sh
-https://github.com/Holuphilix/jenkins-scm.git
-```
-
-6. Set Branch to main.
-7. In Script Path, enter:
-
-```sh
-Docker-Pipeline/Jenkinsfile
-```
-
-**Screenshot:**  Script Path `Docker-Pipeline/Jenkinsfile
-`
-![Script Path `Jenkinsfile`](./Images/32.Jenkins_scripts.png)
-
-8. Click Save.
-
-### Step 4: Trigger the Build
-
-1. Navigate to the Docker-Pipeline job in Jenkins.
+1. Navigate to the **WebApp-Deployment-Pipeline** job in Jenkins.
 2. Click "Build Now".
 3. Monitor the Console Output for errors.
 
