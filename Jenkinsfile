@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = 'docker-hub-credentials' // Set this in Jenkins Credentials
-        DOCKER_IMAGE = 'holuphilix/jenkins-pipeline-app:v1'
+        DOCKER_IMAGE = "holuphilix/jenkins-pipeline-app:${BUILD_NUMBER}"
     }
 
     stages {
@@ -16,6 +15,12 @@ pipeline {
         stage('Build Application') {
             steps {
                 sh 'echo "<h1>Welcome to Jenkins Pipeline!</h1>" > index.html'
+            }
+        }
+
+        stage('Validate Docker') {
+            steps {
+                sh 'docker --version'
             }
         }
 
@@ -33,10 +38,7 @@ pipeline {
 
         stage('Push Image to DockerHub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
-                    sh 'docker push $DOCKER_IMAGE'
-                }
+                sh 'docker push $DOCKER_IMAGE'
             }
         }
     }
@@ -48,6 +50,10 @@ pipeline {
         failure {
             echo 'Pipeline failed. Check the logs.'
         }
+        always {
+            sh 'docker system prune -f'
+        }
     }
 }
+
 

@@ -282,7 +282,26 @@ pipeline {
 #### **Objective**
 Automate the creation of a Docker image for the web application and push it to Docker Hub using Jenkins.
 
-#### **Step 1: Update Jenkinsfile in GitHub Repository**
+#### **Step 1: Create a Repository on DockerHub:**
+
+1. Log in to DockerHub:
+- Visit https://hub.docker.com/ and log in to your account.
+
+2. Create a New Repository:
+- Click on Create Repository.
+
+3. Fill in the Details:
+- Repository Name: jenkins-pipeline-app
+- Visibility: Choose Public or Private (Public is free and easier to access).
+- Leave other options as default.
+
+4. Save:
+- Click Create to save the repository.
+
+**Screenshot:** Dockerhub Repository Name 
+![Dockerhub Repository Name](./Images/30.Dockerhub_repos_name.png)
+
+#### **Step 2: Update Jenkinsfile in GitHub Repository**
 Modify the `Jenkinsfile` in your repository to include Docker image creation and pushing to Docker Hub.
 
 #### **Updated Jenkinsfile Script for WebApp-Deployment-Pipeline:**
@@ -292,8 +311,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = 'docker-hub-credentials' // Set this in Jenkins Credentials
-        DOCKER_IMAGE = 'holuphilix/jenkins-pipeline-app:v1'
+        DOCKER_IMAGE = "holuphilix/jenkins-pipeline-app:${BUILD_NUMBER}"
     }
 
     stages {
@@ -306,6 +324,12 @@ pipeline {
         stage('Build Application') {
             steps {
                 sh 'echo "<h1>Welcome to Jenkins Pipeline!</h1>" > index.html'
+            }
+        }
+
+        stage('Validate Docker') {
+            steps {
+                sh 'docker --version'
             }
         }
 
@@ -323,10 +347,7 @@ pipeline {
 
         stage('Push Image to DockerHub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
-                    sh 'docker push $DOCKER_IMAGE'
-                }
+                sh 'docker push $DOCKER_IMAGE'
             }
         }
     }
@@ -338,6 +359,9 @@ pipeline {
         failure {
             echo 'Pipeline failed. Check the logs.'
         }
+        always {
+            sh 'docker system prune -f'
+        }
     }
 }
 ```
@@ -345,7 +369,7 @@ pipeline {
 **Screenshot:** Jenkins Pipeline Execution
 ![Jenkins Pipeline Execution](./Images/22.Jenkinsfile_script.png)
 
-#### **Dockerfile Script for WebApp-Deployment-Pipeline:**
+#### **Step 3: Create Dockerfile Script for WebApp-Deployment-Pipeline:**
 
 ```groovy
 # Use an official Nginx image as the base image
@@ -361,7 +385,7 @@ EXPOSE 80
 **Screenshot:** Dockerfile Execution
 ![Dockerfile Execution](./Images/23.Dockerfile_Script.png)
 
-#### **.gitignore Script for WebApp-Deployment-Pipeline:**
+#### **Step 4: Create .gitignore Script for WebApp-Deployment-Pipeline:**
 
 ```groovy
 # Ignore temporary files
@@ -387,7 +411,7 @@ venv/
 
 ```bash
 git add .
-git commit -m "Updated Jenkinsfile for Docker image creation and push"
+git commit -m "Updated Readme.md for Docker image creation and push"
 git push origin main
 ```
 
