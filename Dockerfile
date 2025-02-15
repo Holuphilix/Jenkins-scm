@@ -1,12 +1,11 @@
-# Use a lightweight web server image
+# Use the official NGINX base image
 FROM nginx:latest
 
-# Copy index.html into the default Nginx web directory
-COPY index.html /usr/share/nginx/html/index.html
+# Set the working directory in the container
+WORKDIR  /usr/share/nginx/html/
 
-# Expose port 80
+# Copy the local HTML file to the NGINX default public directory
+COPY index.html /usr/share/nginx/html/
+
+# Expose port 80 to allow external access
 EXPOSE 80
-
-# Start Nginx server
-CMD ["nginx", "-g", "daemon off;"]
-
