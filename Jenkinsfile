@@ -33,7 +33,7 @@ pipeline {
 
         stage('Deploy Container Locally') {
             steps {
-                sh "docker run -d -p 8090:80 ${DOCKER_IMAGE}"
+                sh "docker run -d -p 8091:80 ${DOCKER_IMAGE}"
             }
         }
     }
