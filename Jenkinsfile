@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'holuphilix/jenkins-pipeline-app'
-        DOCKER_CREDENTIALS_ID = 'holuphilix'
+        DOCKER_CREDENTIALS_ID = 'opeoluwa-2015' // Update this with your Jenkins credentials ID
     }
 
     stages {
@@ -16,26 +16,24 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t $DOCKER_IMAGE .'
+                    sh "docker build -t ${DOCKER_IMAGE} ."
                 }
             }
         }
 
         stage('Push Docker Image') {
             steps {
-                
                 script {
-                    docker.withRegistry('', 'holuphilix') {
-                      sh 'docker push $DOCKER_IMAGE'
+                    docker.withRegistry('', "${DOCKER_CREDENTIALS_ID}") {
+                        sh "docker push ${DOCKER_IMAGE}"
                     }
                 }
- 
             }
         }
 
         stage('Deploy Container Locally') {
             steps {
-                sh 'docker run -d -p 8090:80 $DOCKER_IMAGE'
+                sh "docker run -d -p 8090:80 ${DOCKER_IMAGE}"
             }
         }
     }
