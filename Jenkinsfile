@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'holuphilix/jenkins-pipeline-app'
-        DOCKER_CREDENTIALS_ID = 'opeoluwa-2015' // Update this with your Jenkins credentials ID
+        DOCKER_CREDENTIALS_ID = 'opeoluwa-2015' // This is my Jenkins credentials ID
     }
 
     stages {

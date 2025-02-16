@@ -46,6 +46,47 @@ git init
 **Screenshot:** Project Directory CI-CD-Mastery
 ![Make directory](./Images/1.mkdir_ci-cd-mastery.png)
 
+#### Step 1.2: Stage and Commit the Template to Git
+
+In this step, I will add the website files to the Git repository, configure my global Git settings, and make an initial commit with a descriptive message.
+
+- Add Files: Add all website files to the staging area.
+
+- Configure Git User Information: Set up global configuration with my actual git username and email address.
+
+- Commit Changes: Commit the changes with a clear and descriptive message.
+
+**Commands:**
+```bash
+git add .
+git config --global user.name "YourUsername"
+git config --global user.email "youremail@example.com"
+git commit -m "Updated Jenkinsfile for Docker build and push pipeline"
+```
+
+#### Step 1.3: Push the code to your Github repository
+
+After initializing your Git repository and adding your updated project files (including the Jenkinsfile and other necessary scripts), the next step is to push your code to a remote repository on GitHub. This step is crucial for version control and collaboration.
+
+- Create a Remote Repository on GitHub: Log into your GitHub account and create a new repository named Jenkins-scm. Leave the repository empty without initializing it with a README, .gitignore, or license.
+
+**Screenshot:** Create New Repository
+![New Repository ](./Images/11.Git_repository_name.png)
+
+- Link Your Local Repository to GitHub: In your terminal, within your project directory, add the remote repository URL to your local repository configuration.
+
+- Push Your Code: Upload Your Local Repository Content to GitHub Once you have linked your local repository to GitHub, use the following command to push your commits from your local main branch to the remote repository. This enables you to store your project in the cloud and share it with others.
+
+**Screenshot:** Create New Repository
+![New Repository ](./Images/10.Git_repository.png)
+
+**Commands:**
+```bash
+git remote add origin https://github.com/Holuphilix/Jenkins-scm.git
+git branch -M main
+git push -u origin main
+```
+
 ### Task 2: **Jenkins Server Setup**
 #### Objetive: Configure Jenkins for CI/CD automation.
 
@@ -311,56 +352,48 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "holuphilix/jenkins-pipeline-app:${BUILD_NUMBER}"
+        DOCKER_IMAGE = 'holuphilix/jenkins-pipeline-app'
+        DOCKER_CREDENTIALS_ID = 'opeoluwa-2015' // Update this with your Jenkins credentials ID
     }
 
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/Holuphilix/Jenkins-scm.git'
-            }
-        }
-
-        stage('Build Application') {
-            steps {
-                sh 'echo "<h1>Welcome to Jenkins Pipeline!</h1>" > index.html'
-            }
-        }
-
-        stage('Validate Docker') {
-            steps {
-                sh 'docker --version'
+                git branch: 'main', url: 'https://github.com/Holuphilix/Jenkins-scm.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t $DOCKER_IMAGE .'
+                script {
+                    sh "docker build -t ${DOCKER_IMAGE} ."
+                }
             }
         }
 
-        stage('Run Docker Container') {
+        stage('Push Docker Image') {
             steps {
-                sh 'docker run -d -p 8080:80 $DOCKER_IMAGE'
+                script {
+                    docker.withRegistry('', "${DOCKER_CREDENTIALS_ID}") {
+                        sh "docker push ${DOCKER_IMAGE}"
+                    }
+                }
             }
         }
 
-        stage('Push Image to DockerHub') {
+        stage('Deploy Container Locally') {
             steps {
-                sh 'docker push $DOCKER_IMAGE'
+                sh "docker run -d -p 8091:80 ${DOCKER_IMAGE}"
             }
         }
     }
 
     post {
         success {
-            echo 'Pipeline completed successfully!'
+            echo 'Pipeline completed successfully.'
         }
         failure {
-            echo 'Pipeline failed. Check the logs.'
-        }
-        always {
-            sh 'docker system prune -f'
+            echo 'Pipeline failed.'
         }
     }
 }
@@ -407,6 +440,11 @@ venv/
 
 #### After updating the Jenkinsfile, save the changes and push them to your GitHub repository.
 
+ask 1.4 Push the code to your Github repository
+
+After initializing your Git repository and adding your e-commerce website template, the next step is to push your code to a remote repository on GitHub. This step is crucial for version control and collaboration.
+
+  - Create a Remote Repository on GitHub: Log into your GitHub account and create a new repository named      MarketPeak_Ecommerce. Leave the repository empty without initializing it with a README, .gitignore, or license
 **Commands:**
 
 ```bash
